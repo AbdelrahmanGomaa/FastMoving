@@ -479,4 +479,11 @@ umbraco-package-schema.json
 /umbraco/Logs/
 
 # Media files
-/wwwroot/media/
+#/wwwroot/media/
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.vsidx
+*.dbmdl
