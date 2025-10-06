@@ -1,0 +1,185 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "masterTemplate.cshtml";
+    var PortfolioDetailsHeroImges = Model.Value<MediaWithCrops>("portfolioDetailsHeroImges");
+
+}
+
+ <!-- Content -->
+<!-- Content -->
+    <div class="page-content bg-white rubik">
+               <!-- inner page banner -->
+    <div class="dlab-bnr-inr dlab-bnr-inr-sm overlay-primary bg-pt" style="background-image:url(@PortfolioDetailsHeroImges?.MediaUrl());">
+            <div class="container">
+                <div class="dlab-bnr-inr-entry text-center align-middle">
+                    <h1 class="text-white">@Model.Value("portfolioDetailsName")</h1>
+                    <div class="dlab-post-meta m-b20">
+                        <ul class="d-flex align-items-center justify-content-center">
+                            <li class="post-date text-white"> <i class="fa fa-calendar"></i><strong>10 Aug</strong> <span> 2025</span> </li>
+                            <li class="post-author text-white"><i class="fa fa-user"></i>By <a class="text-white" href="javascript:void(0);">demongo</a> </li>
+                            <li class="post-comment text-white"><i class="fa fa-comments"></i> <a  class="text-white" href="javascript:void(0);">0 Comments</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Pricing Table -->
+			<div class="section-full content-inner bg-white workspace-bx mfp-gallery">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section-head text-center">
+								<h2 class="text-uppercase "><span class="font-weight-300">Check our space</span> <br>Our Workspace</h2>
+							</div>
+						</div>
+					</div>
+
+
+            @{
+                var images = Model.Value<IEnumerable<MediaWithCrops>>("portfolioDetailsImges")?.ToList() ?? new List<MediaWithCrops>();
+            }
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    @if (images.Count > 0)
+                    {
+                        <div class="dlab-box portfolio-box m-b30">
+                            <div class="dlab-media dlab-img-effect dlab-img-overlay1" data-tilt="">
+                                <img src="@images[0].MediaUrl()" alt="Workplace Image" />
+                                <div class="overlay-bx">
+                                    <div class="overlay-icon text-white">
+                                        <h5>Title 1</h5>
+                                        <p class="m-b10">Your optional caption or description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="row">
+                        @for (int i = 1; i <= 3 && i < images.Count; i++)
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="dlab-box portfolio-box m-b30">
+                                    <div class="dlab-media dlab-img-effect dlab-img-overlay1" data-tilt="">
+                                        <img src="@images[i].MediaUrl()" alt="Workplace Image" />
+                                        <div class="overlay-bx">
+                                            <div class="overlay-icon text-white">
+                                                <h5>Title @(i + 1)</h5>
+                                                <p class="m-b10">Optional text</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (images.Count > 4)
+                        {
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dlab-box portfolio-box m-b30">
+                                    <div class="dlab-media dlab-img-effect dlab-img-overlay1" data-tilt="">
+                                        <img src="@images[4].MediaUrl()" alt="Workplace Image" />
+                                        <div class="overlay-bx">
+                                            <div class="overlay-icon text-white">
+                                                <h5>Title 5</h5>
+                                                <p class="m-b10">Optional text</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    @if (images.Count > 5)
+                    {
+                        <div class="dlab-box portfolio-box m-b30">
+                            <div class="dlab-media dlab-img-effect dlab-img-overlay1" data-tilt="">
+                                <img src="@images[5].MediaUrl()" alt="Workplace Image" />
+                                <div class="overlay-bx">
+                                    <div class="overlay-icon text-white">
+                                        <h5>Title 6</h5>
+                                        <p class="m-b10">Optional text</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    @if (images.Count > 6)
+                    {
+                        <div class="dlab-box portfolio-box m-b30">
+                            <div class="dlab-media dlab-img-effect dlab-img-overlay1" data-tilt="">
+                                <img src="@images[6].MediaUrl()" alt="Workplace Image" />
+                                <div class="overlay-bx">
+                                    <div class="overlay-icon text-white">
+                                        <h5>Title 7</h5>
+                                        <p class="m-b10">Optional text</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+					
+
+
+				</div>
+			</div>
+			<!-- Pricing Table End -->
+        <!-- inner page banner END -->
+        <div class="content-area">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Left part start -->
+                    <div class="col-lg-8 col-xl-9">
+                        <!-- blog start -->
+                        <div class="blog-post blog-single">
+                            <div class="dlab-post-text">
+                            <p>@Model.Value("portfolioDetailsDesc")</p>
+                            </div>
+
+
+
+
+                            @* <div class="dlab-post-tags clear">
+                                <div class="post-tags"> <a href="javascript:void(0);">Child </a> <a href="javascript:void(0);">Eduction </a> <a href="javascript:void(0);">Money </a> <a href="javascript:void(0);">Resturent </a> </div>
+                            </div> *@
+							<div class="dlab-divider bg-gray-dark op4"><i class="icon-dot c-square"></i></div>
+							<div class="share-details-btn">
+								<ul>
+									<li><h5 class="m-a0">Share Post</h5></li>
+									<li><a href="javascript:void(0);" class="site-button facebook button-sm"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+									<li><a href="javascript:void(0);" class="site-button google-plus button-sm"><i class="fab fa-google-plus-g"></i> Google Plus</a></li>
+									<li><a href="javascript:void(0);" class="site-button linkedin button-sm"><i class="fab fa-linkedin-in"></i> Linkedin</a></li>
+									<li><a href="javascript:void(0);" class="site-button instagram button-sm"><i class="fab fa-instagram"></i> Instagram</a></li>
+									<li><a href="javascript:void(0);" class="site-button twitter button-sm"><i class="fab fa-twitter"></i> Twitter</a></li>
+									<li><a href="javascript:void(0);" class="site-button whatsapp button-sm"><i class="fab fa-whatsapp"></i> Whatsapp</a></li>
+								</ul>
+							</div>
+                        </div>
+
+
+
+                        <!-- blog END -->
+                    </div>
+                    <!-- Left part END -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content END-->

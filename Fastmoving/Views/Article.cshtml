@@ -1,0 +1,143 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Microsoft.AspNetCore.Http.Extensions
+@using Umbraco.Cms.Core.Models
+
+
+@{
+	Layout = "masterTemplate.cshtml";
+    var blogDatee = Model.Value<DateTime>("date");
+    var BlogImagee = Model.Value<MediaWithCrops>("heroImage");
+}
+<!-- Content -->
+<div class="page-content bg-white">
+    <div class="content-area">
+        <div class="container">
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-8 col-12">
+                    <!-- blog start -->
+                    <div class="blog-post blog-single">
+                        <div class="dlab-post-title ">
+                            <h1 class="post-title m-t0">
+                                <a href="javascript:void(0);">
+                                    @Model.Value("title")
+                                </a>
+                            </h1>
+                        </div>
+                        <div class="dlab-post-meta m-b20">
+                            <ul class="d-flex align-items-center">
+                                <li class="post-date"> <i class="fa fa-calendar"></i><strong>@blogDatee.ToString("dd-MMM-yyyy")</strong>  </li>
+                                <li class="post-author"><i class="fa fa-user"></i>@Model.Value("articleCategory")</li>
+                            </ul>
+                        </div>
+                        <div class="dlab-post-media dlab-img-effect zoom-slow wow fadeIn" data-wow-delay="0.2s"> <a href="javascript:void(0);"><img src="@BlogImagee?.MediaUrl()" alt=""></a> </div>
+                        <div class="dlab-post-text">
+                            <p>@Model.Value("articleBody")</p>
+
+                          
+                        </div>
+                        <div class="dlab-post-tags clear">
+                            <div class="post-tags">
+                                @if (Model.HasValue("articleTags"))
+                                {
+                                    var tags = Model.Value<IEnumerable<string>>("articleTags");
+                                    <ul class="tag-list">
+                                        @foreach (var tag in tags)
+                                        {
+
+                                            <li><a href="javascript:void(0);">@tag</a></li>
+
+                                        }
+                                    </ul>
+                                }
+                            
+                            </div>
+                        </div>
+                        <div class="dlab-divider bg-gray-dark op4"><i class="icon-dot c-square"></i></div>
+                        @{
+                            var url = ViewContext.HttpContext?.Request?.GetEncodedUrl() ?? "https://fastmovingadv.com";
+                        }
+                        <div class="share-details-btn">
+                            <ul class="social-icon">
+                                <li class="title">Share this post:</li>
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=@url" target="_blank" rel="noopener">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/intent/tweet?url=@url&text=Check%20this%20out!" target="_blank" rel="noopener">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=@url" target="_blank" rel="noopener">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://api.whatsapp.com/send?text=@url" target="_blank" rel="noopener">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  
+                    <!-- blog END -->
+                </div>
+                <!-- Left part END -->
+                <!-- Side bar start -->
+                <div class="col-lg-4  sticky-top">
+                    <aside class="side-bar right">
+                   
+                        <div class="widget recent-posts-entry">
+                            <h5 class="widget-title style-1">Recent Posts</h5>
+                            <div class="widget-post-bx">
+
+
+
+                                @{
+                                    var selection = Umbraco.Content(Guid.Parse("6225fd59-0f21-401f-9f0a-a2a6901bee8e"))
+                                    .ChildrenOfType("article")
+                                    .Where(x => x.IsVisible())
+                                    .OrderByDescending(x => x.CreateDate)
+                                    .Take(4);
+                                }
+                                
+                                    @foreach (var item in selection)
+                                    {
+                                            var BlogImage = item.Value<MediaWithCrops>("heroImage");
+                                            var blogDate = item.Value<DateTime>("date");
+                                            
+                                            <div class="widget-post clearfix">
+                                        <div class="dlab-post-media"> <img src="@BlogImage?.MediaUrl()" width="200" height="143" alt=""> </div>
+                                                <div class="dlab-post-info">
+                                                    <div class="dlab-post-header">
+                                                        <h6 class="post-title"><a href="@item.Url()">@item.Value("title")</a></h6>
+                                                    </div>
+                                                    <div class="dlab-post-meta">
+                                                        <ul>
+                                                            <li class="post-author">@item.Value("articleCategory")</li>
+                                                            <li class="post-comment"><i class="fa fa-comments"></i> @blogDate.ToString("dd-MMM-yyyy")</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                    }
+                               
+
+                            
+                            </div>
+                        </div>
+                      
+                    </aside>
+                </div>
+                <!-- Side bar END -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content END-->

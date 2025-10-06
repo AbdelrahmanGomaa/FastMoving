@@ -1,0 +1,32 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
+
+@{
+    var content = (ContentModels.AboutTestimonial)Model.Content;
+    var AboutTestimonialWriterImage = content.Value<MediaWithCrops>("aboutTestimonialWriterImage");
+
+    var desc = content.Value<string>("aboutTestimonialDesc");
+    if (string.IsNullOrWhiteSpace(desc))
+    {
+        return; // skip rendering this item
+    }
+}
+<div class="item">
+    <div class="testimonial-9">
+        <div class="testimonial-pic radius style1">
+            @if (content.HasValue("aboutTestimonialWriterImage"))
+            {
+                <img src="@AboutTestimonialWriterImage?.MediaUrl()" width="100" height="100" alt="">
+            }
+        </div>
+        <div class="testimonial-text">
+            <p>@desc</p>
+        </div>
+        <div class="testimonial-detail">
+            <strong class="testimonial-name">@content.Value("aboutTestimonialName")</strong>
+            <span class="testimonial-position">@content.Value("aboutTestimonialPostion")</span>
+        </div>
+    </div>
+</div>

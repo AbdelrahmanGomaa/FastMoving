@@ -1,0 +1,161 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models
+
+@{
+	Layout = "masterTemplate.cshtml";
+
+    var BlogHeaderImage = Model.Value<MediaWithCrops>("blogHeaderImage");
+}
+
+@{
+
+        int pageSize = 6;
+    int page = 1;
+
+    if (!int.TryParse(Context.Request.Query["page"], out page))
+    {
+        page = 1;
+    }
+    var selection = Umbraco.Content(Guid.Parse("6225fd59-0f21-401f-9f0a-a2a6901bee8e"))
+    .ChildrenOfType("article")
+    .Where(x => x.IsVisible());
+
+    int totalNodes = selection.Count();
+    int totalPages = (int)Math.Ceiling((double)totalNodes / pageSize);
+
+    if (page < 1) page = 1;
+    else if (page > totalPages) page = totalPages;
+
+    var paginatedItems = selection.Skip((page - 1) * pageSize).Take(pageSize);
+    int itemCount = selection.Count();
+
+
+    
+}
+
+
+
+
+
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dlab-bnr-inr dlab-bnr-inr-sm overlay-primary bg-pt" style="background-image:url(@BlogHeaderImage?.MediaUrl());">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">@Model.Name()</h1>
+                <!-- Breadcrumb row -->
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="javascript:void(0);">Home</a></li>
+                        <li>Blog Grid</li>
+                    </ul>
+                </div>
+                <!-- Breadcrumb row END -->
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <div class="content-area">
+        <div class="container">
+            <!-- blog grid -->
+            <div class="row">
+
+
+                
+                    @foreach (var item in paginatedItems)
+                    {
+                                 var BlogImage = item.Value<MediaWithCrops>("heroImage");
+                                 var blogDate = item.Value<DateTime>("date");
+                        
+                                <div class="post card-container col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="blog-post blog-grid blog-rounded blog-effect1">
+                                        <div class="dlab-post-media dlab-img-effect "> <a href="javascript:void(0);"><img src="@BlogImage?.MediaUrl()" alt=""></a> </div>
+                                        <div class="dlab-info p-a20 border-1">
+                                            <div class="dlab-post-title ">
+                                                <h4 class="post-title"><a href="javascript:void(0);">@item.Value("title")</a></h4>
+                                            </div>
+                                            <div class="dlab-post-meta">
+                                                <ul class="d-flex align-items-center">
+                                                    <li class="post-date"> <i class="fa fa-calendar"></i><strong>@blogDate.ToString("dd-MMM-yyyy")</strong></li>
+                                                    <li class="post-author"><i class="fa fa-user"></i>By <a href="javascript:void(0);">Jone</a> </li>
+                                                    <li class="post-comment"><i class="fa fa-comments"></i> <a href="javascript:void(0);">5k</a> </li>
+                                                </ul>
+                                            </div>
+                                            <div class="dlab-post-text">
+                                                <p>@item.Value("summary")</p>
+                                            </div>
+                                            <div class="dlab-post-readmore blog-share">
+                                                <a href="@item.Url()" title="READ MORE" rel="bookmark" class="site-button outline outline-1">
+                                                    READ MORE
+                                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                                </a>
+                                                <div class="share-btn">
+                                                    <ul class="clearfix">
+                                                        <li><a href="javascript:void(0);" class="site-button sharp"><i class="fab fa-facebook-f"></i></a></li>
+                                                        <li><a href="javascript:void(0);" class="site-button sharp"><i class="fab fa-google-plus-g"></i></a></li>
+                                                        <li><a href="javascript:void(0);" class="site-button sharp"><i class="fab fa-linkedin-in"></i></a></li>
+                                                        <li><a href="javascript:void(0);" class="site-button sharp"><i class="fab fa-twitter"></i></a></li>
+                                                        <li class="share-button"><a href="javascript:void(0);" class="site-button sharp"><i class="fa fa-share-alt"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                    }
+              
+
+
+
+
+
+            </div>
+            <!-- blog grid END -->
+            <!-- Pagination -->
+                        <div class="pagination-bx clearfix text-center">
+                            <ul class="pagination justify-content-center">
+
+                                <!-- Prev -->
+                                <li class="previous @(page <= 1 ? "disabled" : "")">
+                                    <a href="@(page > 1 ? (page - 1 == 1 ? "/blog" : $"/blog?page={page - 1}") : "javascript:void(0);")">
+                                        <i class="ti-arrow-left"></i> Prev
+                                    </a>
+                                </li>
+
+                                <!-- Pages -->
+                                @for (int i = 1; i <= totalPages; i++)
+                                {
+                                    <li class="@(i == page ? "active" : "")">
+                                        <a href="@(i == 1 ? "/blog" : $"/blog?page={i}")">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+
+                                <!-- Next -->
+                                <li class="next @(page >= totalPages ? "disabled" : "")">
+                                    <a href="@(page < totalPages ? $"/blog?page={page + 1}" : "javascript:void(0);")">
+                                        Next <i class="ti-arrow-right"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+
+                                 <div class="workspaces-filter">
+                                    <div class="workspaces-count">Total Blogs is @itemCount</div>
+                                </div>
+                <!-- Pagination END -->
+                                
+
+
+        </div>
+    </div>
+</div>
+<!-- Content END-->

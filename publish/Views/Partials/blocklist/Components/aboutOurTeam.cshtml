@@ -1,0 +1,29 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
+
+@{
+         var content = (ContentModels.AboutOurTeam)Model.Content;
+		 var AboutOurTeamImage = content.Value<MediaWithCrops>("aboutOurTeamImage");
+
+}
+
+		    		<div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+						<div class="team-section">
+							<img src="@AboutOurTeamImage.MediaUrl()" alt="">
+							<div class="team-content text-white">
+								<p class="m-a0">@content.Value("aboutOurTeamPostion")</p>
+								<h6 class="text-uppercase text-black m-b0">@content.Value("aboutOurTeamName")</h6>
+								<div class="dlab-divider bg-white mt-2 mb-2"></div>
+								<ul class="list-inline m-a0">
+									<li><a href="@content.Value("aboutOurTeamFbLink")" target="_blank" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
+									<li><a href="@content.Value("aboutOurTeamInLink")" target="_blank" class="text-white"><i class="fab fa-linkedin-in"></i></a></li>
+									<li><a href="@content.Value("aboutOurTeamInstaLink")" target="_blank" class="text-white"><i class="fab fa-instagram"></i></a></li>
+									<li><a href="@content.Value("aboutOurTeamTwitterLink")" target="_blank" class="text-white"><i class="fab fa-twitter"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+                       

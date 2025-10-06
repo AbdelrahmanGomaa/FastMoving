@@ -1,0 +1,46 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
+
+@{
+         var content = (ContentModels.AboutTestimonial)Model.Content;
+		 var AboutTestimonialWriterImage = content.Value<MediaWithCrops>("aboutTestimonialWriterImage");
+    	 var AboutTestimonialVideoImage = content.Value<MediaWithCrops>("aboutTestimonialVideoImage");
+
+}
+
+		    
+                        <div class="item">
+							<div class="testimonial-8">
+							@if (AboutTestimonialVideoImage != null && !string.IsNullOrEmpty(content.Value<string>("aboutTestimonialVideoLink")))
+							{
+								<div class="testimonial-text">
+									<div class="video-testimonial">
+										<img src="@AboutTestimonialVideoImage.MediaUrl()" alt="">
+										<div class="video-testimonial-play">
+											<a href="@content.Value("aboutTestimonialVideoLink")" class="popup-youtube video" title="Image Title Come Here">
+												<i class="ti-control-play"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							}
+							else
+							{
+								<div class="testimonial-text">
+									<p>@content.Value("aboutTestimonialDesc")</p>
+								</div>
+							}
+								<div class="testimonial-detail clearfix">
+									<div class="testimonial-pic radius shadow">
+										 @if (content.HasValue("aboutTestimonialWriterImage"))
+                                    {
+										<img src="@AboutTestimonialWriterImage?.MediaUrl()" width="100" height="100" alt="">
+									}
+									</div>
+									<h5 class="testimonial-name m-t0 m-b5">@content.Value("aboutTestimonialName")</h5>
+									<span>@content.Value("aboutTestimonialPostion")</span>
+								</div>
+							</div>
+						</div>

@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListModel>
+
+@{
+    if (Model?.Any() != true) { return; }
+    int delayIndex = 1;
+    var firstFourBlocks = Model.Take(4);
+}
+<div class="row">
+    @foreach (var block in firstFourBlocks)
+    {
+        if (block?.ContentUdi == null) { continue; }
+
+        var delay = $"{0.2 * delayIndex:0.0}s";
+        delayIndex++;
+
+        @await Html.PartialAsync("blocklist/Components/homeOurServicesItem", (block, delay))
+    }
+</div>

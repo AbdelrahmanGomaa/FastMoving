@@ -1,0 +1,43 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
+
+@{
+         var content = (ContentModels.OurServicesPrice)Model.Content;
+		 var ContactsPage = Umbraco.Content(Guid.Parse("456cf9a9-1fe2-42fd-9498-c48ad2ad4215"));
+		 var isSecond = ViewData["index"] != null && (int)ViewData["index"] == 1;
+		 var activeClass = isSecond ? "active" : "";
+
+}
+
+		    <div class="col-sm-12 col-md-4 col-lg-4 p-lr0">
+				<div class="pricingtable-wrapper style1 @activeClass">
+								<div class="pricingtable-inner">
+									<div class="pricingtable-price">
+										<div class="pricingtable-icon"><i class="@content.Value("ourServicesPriceIcon")"></i></div>
+										<h4 class="font-weight-300 m-t10 m-b0">@content.Value("ourServicesPriceTitle")</h4>
+										<span class="pricingtable-bx text-primary">@content.Value("ourServicesPriceCost")</span> <span class="pricingtable-type">@content.Value("ourServicesPriceCostPer")</span>
+									</div>
+
+									@{
+											if (content.Value<string[]>("ourServicesPriceFeatures").Length > 0)
+											{
+												<ul class="pricingtable-features">
+												@foreach (var OurServicesPriceFeatures in content.Value<string[]>("ourServicesPriceFeatures"))
+												{
+													<li><i class="fa fa-check text-primary"></i> @OurServicesPriceFeatures </li>
+													}
+												</ul>
+											}
+									}
+									<div class="m-t20">
+										<a href="@ContactsPage.Url()" class="site-button outline outline-2 button-md">Sign Up</a>
+									</div>
+								</div>
+				</div>
+			</div>
+
+
+
+                    

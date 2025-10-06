@@ -1,0 +1,30 @@
+﻿@model (Umbraco.Cms.Core.Models.Blocks.BlockListItem Block, string Delay)
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Cms.Core.Models
+
+@{
+    var content = (ContentModels.OurServicesItem)Model.Block.Content;
+    var OurServicesItemImage = content.Value<MediaWithCrops>("ourServicesItemImage");
+}
+<div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-delay="@Model.Delay">
+    <div class="dlab-box-bg m-b30 box-hover fly-box" style="background-image: url(@OurServicesItemImage?.MediaUrl())">
+        <div class="icon-bx-wraper center p-lr20 p-tb30">
+            <div class="text-primary">
+                <span class="icon-cell icon-lg">
+                    <i class="@content.Value("ourServicesItemIcon")"></i>
+                </span>
+            </div>
+            <div class="icon-content m-b20">
+                <h5 class="dlab-tilte">@content.Value("ourServicesItemTitle")</h5>
+                <p>@content.Value("ourServicesItemDesc")</p>
+            </div>
+        </div>
+    </div>
+</div>
+					
+
+
+				    
+
+
+
